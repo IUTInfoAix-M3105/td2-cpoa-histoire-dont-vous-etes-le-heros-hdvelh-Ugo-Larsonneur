@@ -16,10 +16,13 @@ public class NodeMultiple {
 	public static final String ERROR_MSG_INDEX_OUT_OF_RANGE = "Index out of range";
 	public static int NODE_MAX_ARITY = 10;
 
+	private NodeMultiple[] daughters = new NodeMultiple[NODE_MAX_ARITY];
+	private Object data = new Object();
+
 	/* Overridden methods */
 	@Override
 	public String toString() {
-		/* TO BE COMPLETED */
+		return  data.toString();
 	}
 
 	/* Getters/Setters */
@@ -32,7 +35,7 @@ public class NodeMultiple {
 	 * @return the {@code i}th daughter node, or {@code null} if it does not exist.
 	 */
 	public NodeMultiple getDaughter(int i) {
-		/* TO BE COMPLETED */
+		return daughters[i];
 	}
 
 	/**
@@ -50,21 +53,22 @@ public class NodeMultiple {
 	 * @param i        the daughter node's index
 	 */
 	public void setDaughter(NodeMultiple daughter, int i) {
-		/* TO BE COMPLETED */
+		if (i >= NODE_MAX_ARITY) /*A faire: gestion de l'erreur*/ return;
+		daughters[i] = daughter;
 	}
 
 	/**
 	 * @return all the daughters
 	 */
 	public NodeMultiple[] getDaughters() {
-		/* TO BE COMPLETED */
+		return daughters;
 	}
 
 	/**
 	 * @param daughters the daughters to set
 	 */
 	public void setDaughters(NodeMultiple[] daughters) {
-		/* TO BE COMPLETED */
+		this.daughters = daughters;
 	}
 
 	/**
@@ -76,21 +80,26 @@ public class NodeMultiple {
 	 * @param daughter
 	 */
 	public void addDaughter(NodeMultiple daughter) {
-		/* TO BE COMPLETED */
+		for(int i = 0; i < NODE_MAX_ARITY; ++i){
+			if(daughters[i] == null){
+				daughters[i] = daughter;
+				break;
+			}
+		}
 	}
 
 	/**
 	 * @return the content data
 	 */
 	public Object getData() {
-		/* TO BE COMPLETED */
+		return data;
 	}
 
 	/**
 	 * @param data
 	 */
 	public void setData(Object data) {
-		/* TO BE COMPLETED */
+		this.data = data;
 	}
 
 	/**
@@ -98,7 +107,9 @@ public class NodeMultiple {
 	 *         daughter node.
 	 */
 	public boolean hasDaughters() {
-		/* TO BE COMPLETED */
+		for(int i = 0; i < NODE_MAX_ARITY; ++i)
+			if(daughters[i] == null) return true;
+		return false;
 	}
 
 	/* Constructors */
@@ -116,7 +127,8 @@ public class NodeMultiple {
 	 * @param data
 	 */
 	public NodeMultiple(Object data) {
-		/* TO BE COMPLETED */
+		this.data = data;
+	}
 }
 
 // eof
