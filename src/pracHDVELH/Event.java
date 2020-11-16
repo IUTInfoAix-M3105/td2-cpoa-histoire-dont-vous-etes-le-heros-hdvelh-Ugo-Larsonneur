@@ -68,7 +68,7 @@ public class Event extends NodeMultiple {
 	 * @see pracHDVELH.NodeMultiple#getData()
 	 */
 	public String getData() {
-		return super.toString();
+		return super.getData().toString();
 	}
 
 	/**
@@ -85,7 +85,7 @@ public class Event extends NodeMultiple {
 	@Override
 	public Event getDaughter(int i) {
 
-		return new Event(gui, super.getDaughter(i).toString());
+		return new Event(gui, super.getDaughter(i).getData().toString());
 	}
 
 	/**
@@ -121,9 +121,21 @@ public class Event extends NodeMultiple {
 	/* Methods */
 	/* TO BE COMPLETED */
 
+	public boolean isFinal(){
+		return !hasDaughters();
+	}
+
+	public boolean isInRange(int index){
+		return (index > 0 && index < NodeMultiple.NODE_MAX_ARITY);
+	}
+
+	public int interpretAnswer() {
+		//TODO
+	}
+
 	@Override
 	public String toString() {
-		return "Event #"+id+" ("+ getClass().getName() +"): "+super.toString()+".";
+		return "Event #"+id+" ("+ getClass().getName() +"): "+super.getData().toString()+".";
 	}
 
 	public Event(){
