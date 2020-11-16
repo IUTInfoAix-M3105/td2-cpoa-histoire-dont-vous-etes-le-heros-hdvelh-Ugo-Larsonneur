@@ -16,8 +16,8 @@ public class NodeMultiple {
 	public static final String ERROR_MSG_INDEX_OUT_OF_RANGE = "Index out of range";
 	public static int NODE_MAX_ARITY = 10;
 
-	private NodeMultiple[] daughters = new NodeMultiple[NODE_MAX_ARITY];
-	private Object data = new Object();
+	private NodeMultiple[] daughters;
+	private Object data;
 
 	/* Overridden methods */
 	@Override
@@ -35,6 +35,8 @@ public class NodeMultiple {
 	 * @return the {@code i}th daughter node, or {@code null} if it does not exist.
 	 */
 	public NodeMultiple getDaughter(int i) {
+		if(i >= NODE_MAX_ARITY || i < 0)
+			ErrorNaiveHandler.abort(ERROR_STATUS_INDEX_OUT_OF_RANGE,ERROR_MSG_INDEX_OUT_OF_RANGE);
 		return daughters[i];
 	}
 
@@ -53,7 +55,8 @@ public class NodeMultiple {
 	 * @param i        the daughter node's index
 	 */
 	public void setDaughter(NodeMultiple daughter, int i) {
-		if (i >= NODE_MAX_ARITY) /*A faire: gestion de l'erreur*/ return;
+		if(i >= NODE_MAX_ARITY || i < 0)
+			ErrorNaiveHandler.abort(ERROR_STATUS_INDEX_OUT_OF_RANGE,ERROR_MSG_INDEX_OUT_OF_RANGE);
 		daughters[i] = daughter;
 	}
 
@@ -68,6 +71,7 @@ public class NodeMultiple {
 	 * @param daughters the daughters to set
 	 */
 	public void setDaughters(NodeMultiple[] daughters) {
+
 		this.daughters = daughters;
 	}
 
@@ -80,10 +84,12 @@ public class NodeMultiple {
 	 * @param daughter
 	 */
 	public void addDaughter(NodeMultiple daughter) {
-		for(int i = 0; i < NODE_MAX_ARITY; ++i){
+		if(daughter == null) return;
+
+		for(int i = 0; i < NODE_MAX_ARITY; ++i) {
 			if(daughters[i] == null){
 				daughters[i] = daughter;
-				break;
+				return;
 			}
 		}
 	}
@@ -108,7 +114,7 @@ public class NodeMultiple {
 	 */
 	public boolean hasDaughters() {
 		for(int i = 0; i < NODE_MAX_ARITY; ++i)
-			if(daughters[i] == null) return true;
+			if(daughters[i] != null) return true;
 		return false;
 	}
 
@@ -117,7 +123,7 @@ public class NodeMultiple {
 	 * Default constructor.
 	 */
 	public NodeMultiple() {
-		/* TO BE COMPLETED */
+		daughters = new NodeMultiple[NODE_MAX_ARITY];
 	}
 
 	/**
@@ -127,6 +133,7 @@ public class NodeMultiple {
 	 * @param data
 	 */
 	public NodeMultiple(Object data) {
+		this();
 		this.data = data;
 	}
 }

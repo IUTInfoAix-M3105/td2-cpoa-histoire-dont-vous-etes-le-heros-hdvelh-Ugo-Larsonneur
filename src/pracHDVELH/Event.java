@@ -18,6 +18,9 @@ public class Event extends NodeMultiple {
 	public static final String PROMPT_ANSWER = "Answer: ";
 	public static final String WARNING_MSG_INTEGER_EXPECTED = "Please input a integer within range!";
 
+	private static GUIManager gui;
+	private int id;
+
 	/**
 	 * @return the playerAnswer
 	 */
@@ -65,7 +68,7 @@ public class Event extends NodeMultiple {
 	 * @see pracHDVELH.NodeMultiple#getData()
 	 */
 	public String getData() {
-		/* TO BE COMPLETED */
+		return super.toString();
 	}
 
 	/**
@@ -73,7 +76,7 @@ public class Event extends NodeMultiple {
 	 * @param data
 	 */
 	public void setData(String data) {
-		/* TO BE COMPLETED */
+		super.setData(data);
 	}
 
 	/**
@@ -81,7 +84,8 @@ public class Event extends NodeMultiple {
 	 */
 	@Override
 	public Event getDaughter(int i) {
-		/* TO BE COMPLETED */
+
+		return new Event(gui, super.getDaughter(i).toString());
 	}
 
 	/**
@@ -90,32 +94,47 @@ public class Event extends NodeMultiple {
 	 * @param i
 	 */
 	public void setDaughter(Event daughter, int i) {
-		/* TO BE COMPLETED */
+		super.setDaughter(daughter,i);
 	}
 
 	/**
 	 * @return the gui
 	 */
 	public GUIManager getGui() {
-		/* TO BE COMPLETED */
+		return gui;
 	}
 
 	/**
 	 * @param gui the gui to set
 	 */
 	public void setGui(GUIManager gui) {
-		/* TO BE COMPLETED */
+		this.gui = gui;
 	}
 
 	/**
 	 * @return the id
 	 */
 	public int getId() {
-		/* TO BE COMPLETED */
+		return id;
 	}
 
 	/* Methods */
 	/* TO BE COMPLETED */
+
+	@Override
+	public String toString() {
+		return "Event #"+id+" ("+ getClass().getName() +"): "+super.toString()+".";
+	}
+
+	public Event(){
+		gui = null;
+		setData(null);
+	}
+
+	public Event(GUIManager gui, String data){
+		this();
+		this.gui = gui;
+		setData(data);
 	}
 }
 
