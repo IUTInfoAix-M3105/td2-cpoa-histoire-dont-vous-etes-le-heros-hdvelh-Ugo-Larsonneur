@@ -25,7 +25,7 @@ public class Event extends NodeMultiple {
 	 * @return the playerAnswer
 	 */
 	public String getPlayerAnswer() {
-		/* TO BE COMPLETED */
+		return  gui.getInputReader().next();
 	}
 
 	/**
@@ -94,6 +94,7 @@ public class Event extends NodeMultiple {
 	 * @param i
 	 */
 	public void setDaughter(Event daughter, int i) {
+
 		super.setDaughter(daughter,i);
 	}
 
@@ -101,6 +102,7 @@ public class Event extends NodeMultiple {
 	 * @return the gui
 	 */
 	public GUIManager getGui() {
+
 		return gui;
 	}
 
@@ -108,6 +110,7 @@ public class Event extends NodeMultiple {
 	 * @param gui the gui to set
 	 */
 	public void setGui(GUIManager gui) {
+
 		this.gui = gui;
 	}
 
@@ -115,6 +118,7 @@ public class Event extends NodeMultiple {
 	 * @return the id
 	 */
 	public int getId() {
+
 		return id;
 	}
 
@@ -126,17 +130,30 @@ public class Event extends NodeMultiple {
 	}
 
 	public boolean isInRange(int index){
-		return (index > 0 && index < NodeMultiple.NODE_MAX_ARITY);
+		return (index >= 0 && index < NodeMultiple.NODE_MAX_ARITY);
 	}
 
 	public int interpretAnswer() {
-		//TODO
+
+		String answer = getPlayerAnswer();
+
+		if(!answer.matches("[1-9]"))
+			ErrorNaiveHandler.abort("Not an int between 1 and 9");;
+
+		int answerInt = Integer.parseInt(answer);
+
+		if(!isInRange(answerInt))
+			ErrorNaiveHandler.abort("Not in answer range");
+
+		return answerInt;
 	}
 
 	@Override
 	public String toString() {
+
 		return "Event #"+id+" ("+ getClass().getName() +"): "+super.getData().toString()+".";
 	}
+
 
 	public Event(){
 		gui = null;
@@ -147,6 +164,13 @@ public class Event extends NodeMultiple {
 		this();
 		this.gui = gui;
 		setData(data);
+	}
+
+	public Event run (){
+
+		gui.output(getData());
+
+		return getDaughter(interpretAnswer());
 	}
 }
 
