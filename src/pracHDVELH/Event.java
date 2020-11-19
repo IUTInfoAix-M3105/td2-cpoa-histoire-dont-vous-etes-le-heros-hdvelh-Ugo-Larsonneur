@@ -20,47 +20,52 @@ public class Event extends NodeMultiple {
 
 	private static GUIManager gui;
 	private int id;
+	static private int lastId = -1;
+
+	private String playerAnswer;
+	private int chosenPath;
+
+	private Scanner reader;
 
 	/**
 	 * @return the playerAnswer
 	 */
 	public String getPlayerAnswer() {
-		return  gui.getInputReader().next();
+		return  reader.next();
 	}
 
 	/**
 	 * @param playerAnswer the playerAnswer to set
 	 */
 	public void setPlayerAnswer(String playerAnswer) {
-		/* TO BE COMPLETED */
+		this.playerAnswer = playerAnswer;
 	}
 
 	/**
 	 * @return the reader
 	 */
 	public Scanner getReader() {
-		/* TO BE COMPLETED */
+		return reader;
 	}
 
 	/**
 	 * @param reader the reader to set
 	 */
 	public void setReader(Scanner reader) {
-		/* TO BE COMPLETED */
 	}
 
 	/**
 	 * @return the chosenPath
 	 */
 	public int getChosenPath() {
-		/* TO BE COMPLETED */
+		return chosenPath;
 	}
 
 	/**
 	 * @param chosenPath the chosenPath to set
 	 */
 	public void setChosenPath(int chosenPath) {
-		/* TO BE COMPLETED */
+		this.chosenPath = chosenPath;
 	}
 
 	/* Methods */
@@ -156,21 +161,22 @@ public class Event extends NodeMultiple {
 
 
 	public Event(){
-		gui = null;
-		setData(null);
+		this(new GUIManager(), "");
 	}
 
 	public Event(GUIManager gui, String data){
-		this();
+		super(data);
 		this.gui = gui;
-		setData(data);
+		this.id = ++lastId;
 	}
 
 	public Event run (){
 
 		gui.output(getData());
 
-		return getDaughter(interpretAnswer());
+		chosenPath = interpretAnswer();
+
+		return getDaughter(chosenPath);
 	}
 }
 
