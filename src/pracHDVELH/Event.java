@@ -31,7 +31,7 @@ public class Event extends NodeMultiple {
 	 * @return the playerAnswer
 	 */
 	public String getPlayerAnswer() {
-		return  reader.next();
+		return playerAnswer;
 	}
 
 	/**
@@ -134,11 +134,11 @@ public class Event extends NodeMultiple {
 		return !hasDaughters();
 	}
 
-	public boolean isInRange(int index){
+	private boolean isInRange(int index){
 		return (index >= 0 && index < NodeMultiple.NODE_MAX_ARITY);
 	}
 
-	public int interpretAnswer() {
+	private int interpretAnswer() {
 
 		String answer = getPlayerAnswer();
 
@@ -173,7 +173,9 @@ public class Event extends NodeMultiple {
 	public Event run (){
 
 		gui.output(getData());
+		gui.output(PROMPT_ANSWER);
 
+		playerAnswer = reader.next();
 		chosenPath = interpretAnswer();
 
 		return getDaughter(chosenPath);

@@ -76,6 +76,40 @@ public class Scenario {
 
 		System.out.println(scenario.run());
 	}
+
+	public GUIManager getGui(){
+		return gui;
+	}
+
+	public void setGui(){
+		this.gui = gui;
+	}
+
+	public Event getHead(){
+		return head;
+	}
+
+	public void setHead(){
+		this.head = head;
+	}
+
+	public String run(){
+		Event nextEvent = head;
+		do {
+			nextEvent.run();
+		} while(!nextEvent.isFinal());
+		return ("fin");
+	}
+
+	public Scenario(){
+
+		this(new GUIManager(), null);
+	}
+
+	public Scenario(GUIManager gui, Event head){
+		this.gui = gui;
+		this.head = head;
+	}
 }
 
 // eof
